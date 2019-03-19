@@ -141,30 +141,6 @@ func keyContains(key string, rulekey string) (contains bool) {
 	return true
 }
 
-func makeMap(json interface{}) map[string]string {
-	mapres := make(map[string]string)
-	for k := range json.(map[string]interface{}) {
-		if reflect.TypeOf(json.(map[string]interface{})[k]).Kind() == reflect.Map {
-			makeMap(json.(map[string]interface{})[k])
-		} else if reflect.TypeOf(json.(map[string]interface{})[k]).Kind() == reflect.String {
-			mapres[k] = json.(map[string]interface{})[k].(string)
-		} else if reflect.TypeOf(json.(map[string]interface{})[k]).Kind() == reflect.Bool {
-			mapres[k] = strconv.FormatBool(json.(map[string]interface{})[k].(bool))
-		} else if reflect.TypeOf(json.(map[string]interface{})[k]).Kind() == reflect.String {
-			mapres[k] = strconv.FormatFloat(json.(map[string]interface{})[k].(float64), 'E', -1, 64)
-		} else if reflect.TypeOf(json.(map[string]interface{})[k]).Kind() == reflect.String {
-			mapres[k] = strconv.FormatInt(json.(map[string]interface{})[k].(int64), 16)
-		} else if reflect.TypeOf(json.(map[string]interface{})[k]).Kind() == reflect.String {
-			mapres[k] = strconv.FormatUint(json.(map[string]interface{})[k].(uint64), 16)
-		} else {
-			fmt.Println("Unknown kind: ")
-			fmt.Println(reflect.TypeOf(json.(map[string]interface{})[k]).Kind())
-		}
-	}
-	return mapres
-
-}
-
 func getKeys(json interface{}) []int {
 	mymap := make(map[int]string)
 	keys := make([]int, 0, len(mymap))
